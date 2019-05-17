@@ -28,6 +28,7 @@ import (
 	// Uncomment the following line to load the gcp plugin (only required to authenticate against GKE clusters).
 	// _ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 
+	controllerImp "github.com/vincent-pli/sample-controller/pkg/controller"
 	clientset "github.com/vincent-pli/sample-controller/pkg/generated/clientset/versioned"
 	informers "github.com/vincent-pli/sample-controller/pkg/generated/informers/externalversions"
 	"github.com/vincent-pli/sample-controller/pkg/signals"
@@ -62,7 +63,7 @@ func main() {
 	kubeInformerFactory := kubeinformers.NewSharedInformerFactory(kubeClient, time.Second*30)
 	exampleInformerFactory := informers.NewSharedInformerFactory(exampleClient, time.Second*30)
 
-	controller := NewController(kubeClient, exampleClient,
+	controller := controllerImp.NewController(kubeClient, exampleClient,
 		kubeInformerFactory.Apps().V1().Deployments(),
 		exampleInformerFactory.Samplecontroller().V1alpha1().Foos())
 
